@@ -1,13 +1,12 @@
 package com.springboot.training.spaceover.spacecrew.manager.domain.response.inbound;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigInteger;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class GetSpaceShipResponse {
 
