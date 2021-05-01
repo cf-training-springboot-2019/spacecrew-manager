@@ -2,14 +2,13 @@ package com.springboot.training.spaceover.spacecrew.manager.domain.response.outb
 
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberRole;
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class GetSpaceCrewMemberResponse {
 
