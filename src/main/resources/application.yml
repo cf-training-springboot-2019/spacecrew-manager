@@ -35,3 +35,8 @@ management:
   endpoint:
     health:
       show-details: always
+
+open-api:
+  header:
+    pagination:
+      enabled: false

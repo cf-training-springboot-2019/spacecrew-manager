@@ -20,6 +20,8 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.*;
 
 @RestController
@@ -62,7 +64,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
 
     @Override
     @PostMapping
-    public ResponseEntity createSpaceCrewMember(@RequestBody CreateSpaceCrewMemberRequest request) {
+    public ResponseEntity createSpaceCrewMember(@RequestBody @Valid CreateSpaceCrewMemberRequest request) {
         SpaceCrewMember spaceMission = spaceCrewMemberService.save(modelMapper.map(request, SpaceCrewMember.class));
         return ResponseEntity.created(getResourceUri(spaceMission.getId())).build();
     }
@@ -77,7 +79,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
 
     @Override
     @PutMapping(ID_URI)
-    public ResponseEntity<PutSpaceCrewMemberResponse> putSpaceMission(@PathVariable("id") Long id, @RequestBody PutSpaceCrewMemberRequest request) {
+    public ResponseEntity<PutSpaceCrewMemberResponse> putSpaceMission(@PathVariable("id") Long id, @RequestBody @Valid PutSpaceCrewMemberRequest request) {
         request.setId(id);
         SpaceCrewMember entity = spaceCrewMemberService.update(modelMapper.map(request, SpaceCrewMember.class));
         return ResponseEntity.ok(modelMapper.map(entity, PutSpaceCrewMemberResponse.class));

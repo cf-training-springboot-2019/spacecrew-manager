@@ -17,4 +17,7 @@ public class SpaceCrewManagerProperties {
     @Value("${spaceship-manager.api.url:http://localhost:8080}")
     private String spaceshipManagerBaseUrl;
 
+    @Value("${open-api.header.pagination.enabled:false}")
+    private boolean openApiHeaderPaginationEnabled;
+
 }
