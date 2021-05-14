@@ -1,7 +1,6 @@
 package com.springboot.training.spaceover.spacecrew.manager.domain.request.inbound;
 
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberRole;
-import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,9 +24,6 @@ public class CreateSpaceCrewMemberRequest {
     @NotNull
     @PositiveOrZero
     private Long spaceShipId;
-
-    @NotNull
-    private SpaceCrewMemberStatus status;
 
     @NotNull
     private SpaceCrewMemberRole role;
