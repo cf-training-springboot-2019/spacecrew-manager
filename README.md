@@ -16,7 +16,8 @@ The application uses Spring Boot parent bom version 2.4.5 as its foundation.
 | getSpaceCrewMembers | Synchronous operation that allows the retrieval of multiples persisted space crew member resource entries. |
 | getSpaceCrewMember |  Synchronous operation that allows the retrieval of a single persisted space crew member resource entry. |
 | createSpaceCrewMember |  Synchronous operation that allows the persistence of a single space crew member resource entry. |
-| updateSpaceCrewMember| Synchronous operation that allows the update of a single space crew member persisted resource entry. |
+| patchSpaceCrewMember| Synchronous operation that allows the partial update of a single space crew member persisted resource entry. |
+| putSpaceCrewMember| Synchronous operation that allows the full update of a single space crew member persisted resource entry. |
 | deleteSpaceCrewMember | Synchronous operation that allows the removal of a single space crew member persisted resource entry. |
 
 ## Getting Started

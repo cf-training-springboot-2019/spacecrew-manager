@@ -11,12 +11,12 @@ public class SpaceCrewManagerConstant {
     /**
      * Operations
      */
-    public static final String GET_SPACE_CREW_MEMBERS_SERVICE_OPERATION = "GetCrewMembers";
-    public static final String GET_SPACE_CREW_MEMBER_SERVICE_OPERATION = "GetCrewMember";
-    public static final String CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION = "CreateCrewMember";
-    public static final String PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION = "PatchCrewMember";
-    public static final String PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION = "PutCrewMember";
-    public static final String DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION = "DeleteCrewMember";
+    public static final String GET_SPACE_CREW_MEMBERS_SERVICE_OPERATION = "getCrewMembers";
+    public static final String GET_SPACE_CREW_MEMBER_SERVICE_OPERATION = "getCrewMember";
+    public static final String CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION = "createCrewMember";
+    public static final String PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION = "patchCrewMember";
+    public static final String PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION = "putCrewMember";
+    public static final String DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION = "deleteCrewMember";
     public static final String UNDEFINED_SERVICE_OPERATION = "Undefined";
 
     /**
@@ -73,6 +73,16 @@ public class SpaceCrewManagerConstant {
     public static final String STATUS_FIELD = "status";
     public static final String ROLE_FIELD = "role";
     public static final String SPACESHIP_ID_FIELD = "spaceShipId";
+
+    /**
+     * OpenAPI
+     */
+    public static final String GET_SPACE_CREW_MEMBERS_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the retrieval of multiples persisted space crew member resource entries.";
+    public static final String GET_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the retrieval of a single persisted space crew member resource entry.";
+    public static final String CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the persistence of a single space crew member resource entry.";
+    public static final String PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the partial update of a single space crew member persisted resource entry.";
+    public static final String PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the full update of a single space crew member persisted resource entry.";
+    public static final String DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION = "Synchronous operation that allows the removal of a single space crew member persisted resource entry.";
 
     /**
      * Miscellaneous

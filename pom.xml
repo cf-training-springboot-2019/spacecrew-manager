@@ -20,6 +20,7 @@
         <modelmapper.version>2.4.2</modelmapper.version>
         <json-patch.version>1.13</json-patch.version>
         <git-commit-id-plugin.version>4.0.4</git-commit-id-plugin.version>
+        <springdoc-openapi.version>1.5.8</springdoc-openapi.version>
     </properties>
     <dependencies>
         <dependency>
@@ -72,6 +73,16 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-data-rest</artifactId>
+            <version>${springdoc-openapi.version}</version>
         </dependency>
     </dependencies>
 
