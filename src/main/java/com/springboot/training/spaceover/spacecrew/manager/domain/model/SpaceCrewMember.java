@@ -23,26 +23,26 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class SpaceCrewMember extends Auditable<String> {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @NotNull
-        @PositiveOrZero
-        private Long spaceShipId;
+    @NotNull
+    @PositiveOrZero
+    private Long spaceShipId;
 
-        @NotNull
-        @NotEmpty
-        private String name;
+    @NotNull
+    @NotEmpty
+    private String name;
 
-        @NotNull
-        private SpaceCrewMemberStatus status;
+    @NotNull
+    private SpaceCrewMemberStatus status;
 
-        @NotNull
-        private SpaceCrewMemberRole role;
+    @NotNull
+    private SpaceCrewMemberRole role;
 
-        @NotNull
-        @PositiveOrZero
-        private BigDecimal salary;
+    @NotNull
+    @PositiveOrZero
+    private BigDecimal salary;
 
 }

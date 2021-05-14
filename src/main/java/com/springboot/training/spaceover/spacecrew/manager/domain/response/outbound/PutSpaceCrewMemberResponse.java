@@ -1,4 +1,4 @@
-package com.springboot.training.spaceover.spacecrew.manager.domain.request.inbound;
+package com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound;
 
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberRole;
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberStatus;
@@ -7,33 +7,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateSpaceCrewMemberRequest {
+public class PutSpaceCrewMemberResponse {
 
-    @NotNull
-    @NotEmpty
+    private Long id;
+
     private String name;
 
-    @NotNull
-    @PositiveOrZero
     private Long spaceShipId;
 
-    @NotNull
     private SpaceCrewMemberStatus status;
 
-    @NotNull
     private SpaceCrewMemberRole role;
 
-    @NotNull
-    @PositiveOrZero
     private BigDecimal salary;
 
 }
