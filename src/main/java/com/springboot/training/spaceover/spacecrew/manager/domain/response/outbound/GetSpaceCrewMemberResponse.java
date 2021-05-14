@@ -2,7 +2,11 @@ package com.springboot.training.spaceover.spacecrew.manager.domain.response.outb
 
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberRole;
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.math.BigDecimal;
 
@@ -10,7 +14,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetSpaceCrewMemberResponse {
+public class GetSpaceCrewMemberResponse extends RepresentationModel<GetSpaceCrewMemberResponse> {
 
     private Long id;
 

@@ -1,6 +1,9 @@
 package com.springboot.training.spaceover.spacecrew.manager.domain.response.inbound;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
 

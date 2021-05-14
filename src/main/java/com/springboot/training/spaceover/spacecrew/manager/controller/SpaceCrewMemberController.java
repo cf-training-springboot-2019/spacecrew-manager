@@ -1,26 +1,27 @@
 package com.springboot.training.spaceover.spacecrew.manager.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import com.springboot.training.spaceover.spacecrew.manager.domain.request.inbound.CreateSpaceCrewMemberRequest;
-import com.springboot.training.spaceover.spacecrew.manager.domain.request.inbound.UpdateSpaceCrewMemberRequest;
+import com.springboot.training.spaceover.spacecrew.manager.domain.request.inbound.PutSpaceCrewMemberRequest;
 import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.GetSpaceCrewMemberResponse;
-import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.UpdateSpaceCrewMemberResponse;
-import org.springframework.data.domain.Page;
+import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.PatchSpaceCrewMemberResponse;
+import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.PutSpaceCrewMemberResponse;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface SpaceCrewMemberController {
 
-
-    ResponseEntity<Page<GetSpaceCrewMemberResponse>> getSpaceCrewMembers(Pageable page, String name, String status, List<Long> ids);
+    ResponseEntity<PagedModel<GetSpaceCrewMemberResponse>> getSpaceCrewMembers(Pageable pageable, String name, String status, String role, Long spaceShipId);
 
     ResponseEntity<GetSpaceCrewMemberResponse> getSpaceCrewMember(Long id);
 
     ResponseEntity createSpaceCrewMember(CreateSpaceCrewMemberRequest request);
 
-    ResponseEntity<UpdateSpaceCrewMemberResponse>  UpdateSpaceCrewMember(UpdateSpaceCrewMemberRequest request);
+    ResponseEntity<PatchSpaceCrewMemberResponse> patchSpaceMission(Long id, JsonPatch patch);
+
+    ResponseEntity<PutSpaceCrewMemberResponse> putSpaceMission(Long id, PutSpaceCrewMemberRequest request);
 
     ResponseEntity deleteSpaceCrewMember(Long id);
-    
+
 }

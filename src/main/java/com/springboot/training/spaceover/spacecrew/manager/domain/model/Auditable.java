@@ -18,18 +18,18 @@ import java.util.Date;
 public abstract class Auditable<U> {
 
 
-	@CreatedBy
-	protected U createdBy;
+    @CreatedBy
+    protected U createdBy;
 
-	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
-	protected Date createdAt;
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date createdAt;
 
-	@LastModifiedBy
-	protected U lastModifiedBy;
+    @LastModifiedBy
+    protected U lastModifiedBy;
 
-	@LastModifiedDate
-	@Temporal(TemporalType.TIMESTAMP)
-	protected Date lastModifiedAt;
+    @LastModifiedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date lastModifiedAt;
 
 }

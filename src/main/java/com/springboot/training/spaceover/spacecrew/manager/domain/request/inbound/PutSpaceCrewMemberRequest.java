@@ -1,5 +1,6 @@
-package com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound;
+package com.springboot.training.spaceover.spacecrew.manager.domain.request.inbound;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberRole;
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberStatus;
 import lombok.AllArgsConstructor;
@@ -13,8 +14,9 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateSpaceCrewMemberResponse {
+public class PutSpaceCrewMemberRequest {
 
+    @JsonIgnore
     private Long id;
 
     private String name;
