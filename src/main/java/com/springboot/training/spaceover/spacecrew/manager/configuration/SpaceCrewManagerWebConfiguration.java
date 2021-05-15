@@ -1,6 +1,7 @@
 package com.springboot.training.spaceover.spacecrew.manager.configuration;
 
 import com.springboot.training.spaceover.spacecrew.manager.utils.interceptors.HttpHeaderEnrichmentInterceptor;
+import com.springboot.training.spaceover.spacecrew.manager.utils.interceptors.HttpLoggerInterceptor;
 import com.springboot.training.spaceover.spacecrew.manager.utils.interceptors.MdcInitInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,12 +15,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SpaceCrewManagerWebConfiguration {
 
     @Bean
-    public WebMvcConfigurer webMvcConfigurationInitializer(MdcInitInterceptor mdcInitHandler, HttpHeaderEnrichmentInterceptor headerEnrichmentHandlerInterceptor) {
+    public WebMvcConfigurer webMvcConfigurationInitializer(MdcInitInterceptor mdcInitHandler,
+                                                           HttpHeaderEnrichmentInterceptor headerEnrichmentHandlerInterceptor,
+                                                           HttpLoggerInterceptor httpLoggerInterceptor) {
         return new WebMvcConfigurer() {
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
                 registry.addInterceptor(mdcInitHandler);
                 registry.addInterceptor(headerEnrichmentHandlerInterceptor);
+                registry.addInterceptor(httpLoggerInterceptor);
             }
         };
     }

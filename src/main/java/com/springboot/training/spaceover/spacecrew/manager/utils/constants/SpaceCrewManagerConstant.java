@@ -45,20 +45,18 @@ public class SpaceCrewManagerConstant {
     /**
      * Messages
      */
-    public static final String GET_SPACE_CREW_MEMBERS_MSG = "Getting crewmembers";
-    public static final String GET_SPACE_CREW_MEMBERS_COUNT_MSG = "Got {} crewmembers out of {}";
-    public static final String GET_SPACE_CREW_MEMBER_MSG = "Getting crewmember";
+    public static final String GET_SPACE_CREW_MEMBERS_REQUEST_MSG = "Getting crewmembers";
+    public static final String GET_SPACE_CREW_MEMBERS_RESULT_MSG = "Got {} crewmembers out of {}";
+    public static final String GET_SPACE_CREW_MEMBER_REQUEST_MSG = "Getting crewmember id::{}";
     public static final String GET_SPACE_CREW_MEMBER_RESULT_MSG = "Got crewmember id::{}";
-    public static final String CREATE_SPACE_CREW_MEMBER_MSG = "Creating crewmember";
+    public static final String CREATE_SPACE_CREW_MEMBER_REQUEST_MSG = "Creating crewmember";
     public static final String CREATE_SPACE_CREW_MEMBER_RESULT_MSG = "Created crewmember id::{}";
-    public static final String UPDATE_SPACE_CREW_MEMBER_MSG = "Updating crewmember id::{}";
-    public static final String UPDATE_SPACE_CREW_MEMBER_RESULT_MSG = "Updated crewmember id::{}";
-    public static final String DELETE_SPACE_CREW_MEMBER_MSG = "Deleting crewmember id::{}";
+    public static final String PATCH_SPACE_CREW_MEMBER_REQUEST_MSG = "Patching crewmember id::{}";
+    public static final String PATCH_SPACE_CREW_MEMBER_RESULT_MSG = "Patched crewmember id::{}";
+    public static final String PUT_SPACE_CREW_MEMBER_REQUEST_MSG = "Putting crewmember id::{}";
+    public static final String PUT_SPACE_CREW_MEMBER_RESULT_MSG = "Put crewmember id::{}";
+    public static final String DELETE_SPACE_CREW_MEMBER_REQUEST_MSG = "Deleting crewmember id::{}";
     public static final String DELETE_SPACE_CREW_MEMBER_RESULT_MSG = "Deleted crewmember id::{}";
-    public static final String RESTOCK_SPACE_CREW_MEMBER_MSG = "Restocking crewmember id::{}";
-    public static final String RESTOCK_SPACE_CREW_MEMBER_RESULT_MSG = "Restocked crewmember id::{} by amount {}";
-    public static final String DISPATCH_SPACE_CREW_MEMBER_MSG = "Dispatching crewmembers id::{}";
-    public static final String DISPATCH_SPACE_CREW_MEMBER_RESULT_MSG = "Dispatched crewmember id::{} by amount {}";
     public static final String LOGGING_HANDLER_INBOUND_MSG = "Received HTTP {} Request to {} at {}";
     public static final String LOGGING_HANDLER_OUTBOUND_MSG = "Responded with Status {} at {}";
     public static final String LOGGING_HANDLER_PROCESS_TIME_MSG = "Total processing time {} ms";
