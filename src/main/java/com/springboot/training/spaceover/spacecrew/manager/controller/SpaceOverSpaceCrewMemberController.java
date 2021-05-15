@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,7 @@ import javax.validation.Valid;
 
 import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.*;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(SPACE_CREW_MEMBERS_URI)
@@ -54,6 +56,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
                                                                                       @RequestParam(name = STATUS_FIELD, required = false) String status,
                                                                                       @RequestParam(name = ROLE_FIELD, required = false) String role,
                                                                                       @RequestParam(name = SPACESHIP_ID_FIELD, required = false) Long spaceShipId) {
+        log.trace(GET_SPACE_CREW_MEMBERS_REQUEST_MSG);
         SpaceCrewMember spaceMissionSample = SpaceCrewMember.builder()
                 .name(name)
                 .status(SpaceCrewMemberStatus.fromName(status))
@@ -62,6 +65,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
                 .build();
         Page<SpaceCrewMember> spaceMissionPage = spaceCrewMemberService.findAll(spaceMissionSample, pageable);
         PagedModel<GetSpaceCrewMemberResponse> response = pagedModelAssembler.toModel(spaceMissionPage, modelAssembler);
+        log.info(GET_SPACE_CREW_MEMBERS_RESULT_MSG);
         return ResponseEntity.ok(response);
     }
 
@@ -70,7 +74,9 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
     @ServiceOperation(GET_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = GET_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = GET_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<GetSpaceCrewMemberResponse> getSpaceCrewMember(@PathVariable("id") Long id) {
+        log.trace(GET_SPACE_CREW_MEMBERS_REQUEST_MSG, id);
         GetSpaceCrewMemberResponse response = modelMapper.map(spaceCrewMemberService.findBydId(id), GetSpaceCrewMemberResponse.class);
+        log.info(GET_SPACE_CREW_MEMBERS_RESULT_MSG, id);
         return ResponseEntity.ok(response);
     }
 
@@ -80,8 +86,10 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
     @ServiceOperation(CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity createSpaceCrewMember(@RequestBody @Valid CreateSpaceCrewMemberRequest request) {
-        SpaceCrewMember spaceMission = spaceCrewMemberService.save(modelMapper.map(request, SpaceCrewMember.class));
-        return ResponseEntity.created(getResourceUri(spaceMission.getId())).build();
+        log.trace(CREATE_SPACE_CREW_MEMBER_REQUEST_MSG);
+        SpaceCrewMember spaceCrewMember = spaceCrewMemberService.save(modelMapper.map(request, SpaceCrewMember.class));
+        log.info(CREATE_SPACE_CREW_MEMBER_RESULT_MSG, spaceCrewMember.getId());
+        return ResponseEntity.created(getResourceUri(spaceCrewMember.getId())).build();
     }
 
     @Override
@@ -89,8 +97,10 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
     @ServiceOperation(PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PatchSpaceCrewMemberResponse> patchSpaceMission(@PathVariable("id") Long id, @RequestBody JsonPatch patch) {
+        log.trace(PATCH_SPACE_CREW_MEMBER_REQUEST_MSG, id);
         SpaceCrewMember entity = spaceCrewMemberService.findBydId(id);
         entity = spaceCrewMemberService.update(applyPatch(patch, entity));
+        log.info(PATCH_SPACE_CREW_MEMBER_RESULT_MSG, id);
         return ResponseEntity.ok(modelMapper.map(entity, PatchSpaceCrewMemberResponse.class));
     }
 
@@ -99,8 +109,10 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
     @ServiceOperation(PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PutSpaceCrewMemberResponse> putSpaceMission(@PathVariable("id") Long id, @RequestBody @Valid PutSpaceCrewMemberRequest request) {
+        log.trace(PUT_SPACE_CREW_MEMBER_REQUEST_MSG, id);
         request.setId(id);
         SpaceCrewMember entity = spaceCrewMemberService.update(modelMapper.map(request, SpaceCrewMember.class));
+        log.info(PUT_SPACE_CREW_MEMBER_RESULT_MSG, id);
         return ResponseEntity.ok(modelMapper.map(entity, PutSpaceCrewMemberResponse.class));
     }
 
@@ -110,7 +122,9 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
     @ServiceOperation(DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity deleteSpaceCrewMember(@PathVariable("id") Long id) {
+        log.trace(DELETE_SPACE_CREW_MEMBER_REQUEST_MSG, id);
         spaceCrewMemberService.deleteById(id);
+        log.info(DELETE_SPACE_CREW_MEMBER_RESULT_MSG, id);
         return ResponseEntity.noContent().build();
     }
 }
