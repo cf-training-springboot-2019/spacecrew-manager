@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - 2021-05-01
 ### Added
-* Include swagger OpenAPI specification [#15](https://github.com/cf-training-springboot-2019/spacecrew-manager/issues/15)
+* Response header enrichment  [#17](https://github.com/cf-training-springboot-2019/spacecrew-manager/issues/17)
+* Swagger OpenAPI specification [#15](https://github.com/cf-training-springboot-2019/spacecrew-manager/issues/15)
 * Global exception handling [#13](https://github.com/cf-training-springboot-2019/spacecrew-manager/issues/13)
 * Service contract base implementation [#11](https://github.com/cf-training-springboot-2019/spacecrew-manager/issues/11)
 * Service contract definition [#3](https://github.com/cf-training-springboot-2019/spacecrew-manager/issues/3)

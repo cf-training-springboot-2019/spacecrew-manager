@@ -10,6 +10,7 @@ import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbo
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberRole;
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberStatus;
 import com.springboot.training.spaceover.spacecrew.manager.service.SpaceCrewMemberService;
+import com.springboot.training.spaceover.spacecrew.manager.utils.annotatations.ServiceOperation;
 import com.springboot.training.spaceover.spacecrew.manager.utils.assemblers.PaginationModelAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -46,6 +47,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
     @Override
     @GetMapping
     @PageableAsQueryParam
+    @ServiceOperation(GET_SPACE_CREW_MEMBERS_SERVICE_OPERATION)
     @Operation(summary = GET_SPACE_CREW_MEMBERS_SERVICE_OPERATION, description = GET_SPACE_CREW_MEMBERS_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PagedModel<GetSpaceCrewMemberResponse>> getSpaceCrewMembers(@Parameter(hidden = true) Pageable pageable,
                                                                                       @RequestParam(name = NAME_FIELD, required = false) String name,
@@ -65,6 +67,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
 
     @Override
     @GetMapping(ID_URI)
+    @ServiceOperation(GET_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = GET_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = GET_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<GetSpaceCrewMemberResponse> getSpaceCrewMember(@PathVariable("id") Long id) {
         GetSpaceCrewMemberResponse response = modelMapper.map(spaceCrewMemberService.findBydId(id), GetSpaceCrewMemberResponse.class);
@@ -74,6 +77,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ServiceOperation(CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity createSpaceCrewMember(@RequestBody @Valid CreateSpaceCrewMemberRequest request) {
         SpaceCrewMember spaceMission = spaceCrewMemberService.save(modelMapper.map(request, SpaceCrewMember.class));
@@ -82,6 +86,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
 
     @Override
     @PatchMapping(ID_URI)
+    @ServiceOperation(PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PatchSpaceCrewMemberResponse> patchSpaceMission(@PathVariable("id") Long id, @RequestBody JsonPatch patch) {
         SpaceCrewMember entity = spaceCrewMemberService.findBydId(id);
@@ -91,6 +96,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
 
     @Override
     @PutMapping(ID_URI)
+    @ServiceOperation(PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity<PutSpaceCrewMemberResponse> putSpaceMission(@PathVariable("id") Long id, @RequestBody @Valid PutSpaceCrewMemberRequest request) {
         request.setId(id);
@@ -101,6 +107,7 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
     @Override
     @DeleteMapping(ID_URI)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ServiceOperation(DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION)
     @Operation(summary = DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION, description = DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION_DESCRIPTION)
     public ResponseEntity deleteSpaceCrewMember(@PathVariable("id") Long id) {
         spaceCrewMemberService.deleteById(id);
