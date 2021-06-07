@@ -1,0 +1,12 @@
+[
+  {
+    "op": "replace",
+    "path": "/role",
+    "value": "COMMANDER_OFFICER"
+  },
+  {
+    "op": "replace",
+    "path": "/salary",
+    "value": "5000"
+  }
+]
