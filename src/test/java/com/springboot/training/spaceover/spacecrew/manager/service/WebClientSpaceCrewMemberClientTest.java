@@ -25,9 +25,6 @@ class WebClientSpaceCrewMemberClientTest {
   @Mock
   private WebClient webClient;
 
-  @Mock
-  private SpaceCrewManagerProperties spaceCrewManagerProperties;
-
 
   @Test
   void findBydId() {
@@ -43,7 +40,6 @@ class WebClientSpaceCrewMemberClientTest {
     WebClient.RequestHeadersUriSpec uriSpec = mock(WebClient.RequestHeadersUriSpec.class);
     WebClient.ResponseSpec responseSpec = mock(WebClient.ResponseSpec.class);
 
-    when(spaceCrewManagerProperties.getSpaceshipManagerBaseUrl()).thenReturn("http://localhost:8080");
     when(webClient.get()).thenReturn(uriSpec);
     when(uriSpec.uri("spaceships/1")).thenReturn(uriSpec);
     when(uriSpec.retrieve()).thenReturn(responseSpec);
