@@ -2,9 +2,10 @@ package com.springboot.training.spaceover.spacecrew.manager.service;
 
 import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.ENTITY_NOT_FOUND_MSG;
 import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.SPACE_CREW_MEMBER;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -53,8 +54,8 @@ class SpaceOverSpaceCrewMemberServiceTest {
   private SpaceCrewMember spaceCrewMember2;
   private GetSpaceShipResponse spaceShip;
 
-  @BeforeAll
-  public void setUp(){
+  @BeforeEach
+  public void setUp() {
     spaceCrewMember1 = SpaceCrewMember.builder()
         .id(1L)
         .name("Han Solo")
@@ -98,10 +99,11 @@ class SpaceOverSpaceCrewMemberServiceTest {
 
     Pageable pageRequest = PageRequest.of(0, 20, Sort.by(Direction.ASC, "id"));
 
-    when(spaceCrewMemberRepository.findAll(Example.of(spaceMissionSample, exampleMatcher), pageRequest))
+    when(spaceCrewMemberRepository
+        .findAll(Example.of(spaceMissionSample, exampleMatcher), pageRequest))
         .thenReturn(new PageImpl<>(Collections.singletonList(spaceCrewMember1)));
 
-    Page<SpaceCrewMember> response = service.findAll(spaceMissionSample,pageRequest);
+    Page<SpaceCrewMember> response = service.findAll(spaceMissionSample, pageRequest);
 
     assertEquals(1, response.getTotalElements());
     assertEquals(1, response.getTotalPages());
@@ -146,7 +148,8 @@ class SpaceOverSpaceCrewMemberServiceTest {
 
     when(spaceCrewMemberRepository.findById(1L)).thenReturn(Optional.empty());
 
-    EntityNotFoundException e = assertThrows(EntityNotFoundException.class, () -> service.findBydId(1L));
+    EntityNotFoundException e = assertThrows(EntityNotFoundException.class,
+        () -> service.findBydId(1L));
 
     assertEquals(String.format(ENTITY_NOT_FOUND_MSG, SPACE_CREW_MEMBER, 1L), e.getMessage());
   }
@@ -183,7 +186,8 @@ class SpaceOverSpaceCrewMemberServiceTest {
         .status(SpaceCrewMemberStatus.ACTIVE)
         .build();
 
-    when(spaceCrewMemberRepository.save(spaceCrewMemberToPersist)).thenReturn(spaceCrewMemberToPersist);
+    when(spaceCrewMemberRepository.save(spaceCrewMemberToPersist))
+        .thenReturn(spaceCrewMemberToPersist);
 
     SpaceCrewMember response = service.update(spaceCrewMemberToPersist);
 
