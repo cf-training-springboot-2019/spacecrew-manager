@@ -1,20 +1,17 @@
 package com.springboot.training.spaceover.spacecrew.manager.service;
 
+import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.ENTITY_NOT_FOUND_MSG;
+import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.SPACE_CREW_MEMBER;
+
 import com.springboot.training.spaceover.spacecrew.manager.domain.model.SpaceCrewMember;
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberStatus;
 import com.springboot.training.spaceover.spacecrew.manager.repository.SpaceCrewMemberRepository;
+import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.List;
-
-import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.ENTITY_NOT_FOUND_MSG;
-import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.SPACE_CREW_MEMBER;
 
 @Service
 @RequiredArgsConstructor
@@ -25,13 +22,10 @@ public class SpaceOverSpaceCrewMemberService implements SpaceCrewMemberService {
     private final SpaceShipClient spaceShipClient;
 
     @Override
+    //LT3.3-Include request pagination
+    //LT3.4-Include example matching
     public Page<SpaceCrewMember> findAll(SpaceCrewMember entitySample, Pageable pageRequest) {
-        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
-                .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-                .withMatcher("status", ExampleMatcher.GenericPropertyMatchers.exact())
-                .withMatcher("role", ExampleMatcher.GenericPropertyMatchers.exact())
-                .withMatcher("spaceShipId", ExampleMatcher.GenericPropertyMatchers.exact());
-        return spaceCrewMemberRepository.findAll(Example.of(entitySample, exampleMatcher), pageRequest);
+        return null;
     }
 
     @Override
@@ -46,10 +40,12 @@ public class SpaceOverSpaceCrewMemberService implements SpaceCrewMemberService {
     }
 
     @Override
+    //LT3.2-Modify save method to be transactional
     public SpaceCrewMember save(SpaceCrewMember entity) {
-        spaceShipClient.findBydId(entity.getSpaceShipId());
         entity.setStatus(SpaceCrewMemberStatus.ACTIVE);
-        return spaceCrewMemberRepository.save(entity);
+        entity = spaceCrewMemberRepository.save(entity);
+        spaceShipClient.findBydId(entity.getSpaceShipId());
+        return entity;
     }
 
     @Override

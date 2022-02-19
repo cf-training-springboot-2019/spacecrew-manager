@@ -6,13 +6,13 @@ import com.springboot.training.spaceover.spacecrew.manager.domain.request.inboun
 import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.GetSpaceCrewMemberResponse;
 import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.PatchSpaceCrewMemberResponse;
 import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.PutSpaceCrewMemberResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 
 public interface SpaceCrewMemberController {
 
-    ResponseEntity<PagedModel<GetSpaceCrewMemberResponse>> getSpaceCrewMembers(Pageable pageable, String name, String status, String role, Long spaceShipId);
+    ResponseEntity<Page<GetSpaceCrewMemberResponse>> getSpaceCrewMembers(Pageable pageable, String name, String status, String role, Long spaceShipId);
 
     ResponseEntity<GetSpaceCrewMemberResponse> getSpaceCrewMember(Long id);
 

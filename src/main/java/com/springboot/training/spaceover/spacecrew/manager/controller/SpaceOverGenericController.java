@@ -4,10 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.springboot.training.spaceover.spacecrew.manager.domain.model.SpaceCrewMember;
+import java.net.URI;
 import lombok.SneakyThrows;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 
 public abstract class SpaceOverGenericController {
 

@@ -5,9 +5,6 @@ import com.springboot.training.spaceover.spacecrew.manager.utils.properties.Spac
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestTemplate;
 
-import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.FRONT_SLASH_DELIMITER;
-import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.SPACESHIPS;
-
 @RequiredArgsConstructor
 public class RestTemplateSpaceShipClient implements SpaceShipClient {
 
@@ -17,8 +14,6 @@ public class RestTemplateSpaceShipClient implements SpaceShipClient {
 
     @Override
     public GetSpaceShipResponse findBydId(Long id) {
-        return restTemplate
-                .getForEntity(String.join(FRONT_SLASH_DELIMITER, spaceCrewManagerProperties.getSpaceshipManagerBaseUrl(), SPACESHIPS, String.valueOf(id)),
-                        GetSpaceShipResponse.class).getBody();
+        return null; //LT1.1-Implement SpaceShipClient using RestTemplate
     }
 }
