@@ -28,6 +28,8 @@ import com.springboot.training.spaceover.spacecrew.manager.domain.request.inboun
 import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.GetSpaceCrewMemberResponse;
 import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.PatchSpaceCrewMemberResponse;
 import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.PutSpaceCrewMemberResponse;
+import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberRole;
+import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberStatus;
 import com.springboot.training.spaceover.spacecrew.manager.service.SpaceCrewMemberService;
 import com.springboot.training.spaceover.spacecrew.manager.utils.annotatations.ServiceOperation;
 import com.springboot.training.spaceover.spacecrew.manager.utils.assemblers.PaginationModelAssembler;
@@ -81,9 +83,16 @@ public class SpaceOverSpaceCrewMemberController extends SpaceOverGenericControll
                                                                                       @RequestParam(name = SPACESHIP_ID_FIELD, required = false) Long spaceShipId) {
         //LT3.3-Include request pagination
         //LT3.4-Include example matching
-        Page<SpaceCrewMember> spaceMissionPage = null;
-        Page<GetSpaceCrewMemberResponse> response = null;
-        return ResponseEntity.ok(response);
+        SpaceCrewMember sample = SpaceCrewMember.builder()
+            .name(name)
+            .status(SpaceCrewMemberStatus.fromName(status))
+            .role(SpaceCrewMemberRole.fromName(role))
+            .spaceShipId(spaceShipId)
+            .build();
+        Page<SpaceCrewMember> spaceCrewPage = spaceCrewMemberService.findAll(sample, pageable);;
+        Page<GetSpaceCrewMemberResponse> responsePage = spaceCrewPage
+            .map(m ->modelAssembler.toModel(m));
+        return ResponseEntity.ok(responsePage);
     }
 
     @Override

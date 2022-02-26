@@ -5,6 +5,7 @@ import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMember
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,12 +18,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 //LT3.1-Include domain model auditing
 public class SpaceCrewMember extends Auditable<String> {
 
@@ -47,15 +50,5 @@ public class SpaceCrewMember extends Auditable<String> {
     @NotNull
     @PositiveOrZero
     private BigDecimal salary;
-
-    private String createdBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
-
-    private String lastModifiedBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedAt;
 
 }

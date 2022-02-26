@@ -2,13 +2,17 @@ package com.springboot.training.spaceover.spacecrew.manager.utils.assemblers;
 
 import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.FRONT_SLASH_DELIMITER;
 import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.SPACESHIPS;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import com.springboot.training.spaceover.spacecrew.manager.controller.SpaceOverSpaceCrewMemberController;
 import com.springboot.training.spaceover.spacecrew.manager.domain.model.SpaceCrewMember;
 import com.springboot.training.spaceover.spacecrew.manager.domain.response.outbound.GetSpaceCrewMemberResponse;
 import com.springboot.training.spaceover.spacecrew.manager.utils.properties.SpaceCrewManagerProperties;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
@@ -23,13 +27,15 @@ public class PaginationModelAssembler implements RepresentationModelAssembler<Sp
 
     @Override
     public GetSpaceCrewMemberResponse toModel(SpaceCrewMember entity) {
-        GetSpaceCrewMemberResponse getSpaceMissionResponse = modelMapper.map(entity, GetSpaceCrewMemberResponse.class);
+        GetSpaceCrewMemberResponse getSpaceCrewMemberResponse = modelMapper.map(entity, GetSpaceCrewMemberResponse.class);
         //LT4.2-Add selfref link to GetSpaceMissionResponse
+        getSpaceCrewMemberResponse.add(linkTo(methodOn(SpaceOverSpaceCrewMemberController.class).getSpaceCrewMember(entity.getId())).withSelfRel());
         String spaceShipUrl = String.join(FRONT_SLASH_DELIMITER, spaceCrewManagerProperties.getSpaceshipManagerBaseUrl(),
                 SPACESHIPS,
                 String.valueOf(entity.getSpaceShipId()));
         //Add spaceship details link to GetSpaceMissionResponse
-        return getSpaceMissionResponse;
+        getSpaceCrewMemberResponse.add(Link.of(spaceShipUrl, "spaceship"));
+        return getSpaceCrewMemberResponse;
     }
 
     @Override

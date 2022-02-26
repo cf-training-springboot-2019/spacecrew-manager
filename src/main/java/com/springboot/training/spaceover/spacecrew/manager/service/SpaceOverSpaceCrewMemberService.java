@@ -9,9 +9,12 @@ import com.springboot.training.spaceover.spacecrew.manager.repository.SpaceCrewM
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +28,12 @@ public class SpaceOverSpaceCrewMemberService implements SpaceCrewMemberService {
     //LT3.3-Include request pagination
     //LT3.4-Include example matching
     public Page<SpaceCrewMember> findAll(SpaceCrewMember entitySample, Pageable pageRequest) {
-        return null;
-    }
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+            .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+            .withMatcher("status", ExampleMatcher.GenericPropertyMatchers.exact())
+            .withMatcher("role", ExampleMatcher.GenericPropertyMatchers.exact())
+            .withMatcher("spaceShipId", ExampleMatcher.GenericPropertyMatchers.exact());
+        return spaceCrewMemberRepository.findAll(Example.of(entitySample, exampleMatcher), pageRequest);    }
 
     @Override
     public List<SpaceCrewMember> findAll() {
@@ -41,6 +48,7 @@ public class SpaceOverSpaceCrewMemberService implements SpaceCrewMemberService {
 
     @Override
     //LT3.2-Modify save method to be transactional
+    @Transactional
     public SpaceCrewMember save(SpaceCrewMember entity) {
         entity.setStatus(SpaceCrewMemberStatus.ACTIVE);
         entity = spaceCrewMemberRepository.save(entity);
