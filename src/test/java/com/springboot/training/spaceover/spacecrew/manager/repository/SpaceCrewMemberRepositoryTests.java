@@ -12,6 +12,7 @@ import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMember
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -24,53 +25,31 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
-@DataJpaTest
 @ActiveProfiles("test")
 @Sql("/scripts/import_spacecrew.sql")
+//LT10-2-Add integration test to the persistence layer
 public class SpaceCrewMemberRepositoryTests {
 
-  @Autowired
   private SpaceCrewMemberRepository spaceCrewMemberRepository;
 
   @Test
+  @DisplayName("Given no arguments, when invoking findAll method, then return SpaceCrewMember List")
   void findAllList() {
 
     List<SpaceCrewMember> spaceCrewList = spaceCrewMemberRepository.findAll();
 
     //Assert collection
-    assertNotNull(spaceCrewList);
-    assertEquals(3, spaceCrewList.size());
 
     //Assert first space crew member
-    assertNotNull(spaceCrewList.get(0));
-    assertEquals(1L, spaceCrewList.get(0).getId());
-    assertEquals(123456789L, spaceCrewList.get(0).getSpaceShipId());
-    assertEquals("Finn", spaceCrewList.get(0).getName());
-    assertEquals(SpaceCrewMemberStatus.ACTIVE, spaceCrewList.get(0).getStatus());
-    assertEquals(SpaceCrewMemberRole.ENGINEER_OFFICER, spaceCrewList.get(0).getRole());
-    assertEquals(0, BigDecimal.valueOf(3000L).compareTo(spaceCrewList.get(0).getSalary()));
-
 
     //Assert second space crew member
-    assertNotNull(spaceCrewList.get(1));
-    assertEquals(2L, spaceCrewList.get(1).getId());
-    assertEquals(123456789L, spaceCrewList.get(1).getSpaceShipId());
-    assertEquals("Princess Leia", spaceCrewList.get(1).getName());
-    assertEquals(SpaceCrewMemberStatus.INACTIVE, spaceCrewList.get(1).getStatus());
-    assertEquals(SpaceCrewMemberRole.COMMANDER_OFFICER, spaceCrewList.get(1).getRole());
-    assertEquals(0, BigDecimal.valueOf(4000L).compareTo(spaceCrewList.get(1).getSalary()));
 
     //Assert third space crew member
-    assertNotNull(spaceCrewList.get(2));
-    assertEquals(3L, spaceCrewList.get(2).getId());
-    assertEquals(123456789L, spaceCrewList.get(2).getSpaceShipId());
-    assertEquals("Rose Tico", spaceCrewList.get(2).getName());
-    assertEquals(SpaceCrewMemberStatus.INACTIVE, spaceCrewList.get(2).getStatus());
-    assertEquals(SpaceCrewMemberRole.ENGINEER_OFFICER, spaceCrewList.get(2).getRole());
-    assertEquals(0, BigDecimal.valueOf(3000L).compareTo(spaceCrewList.get(2).getSalary()));
+
   }
 
   @Test
+  @DisplayName("Given SpaceCrewMember and Pageable arguments, when invoking findAll method, then return SpaceCrewMember Page")
   void findAllPage() {
 
     SpaceCrewMember spaceCrewMemberSample = SpaceCrewMember.builder().build();
@@ -87,51 +66,32 @@ public class SpaceCrewMemberRepositoryTests {
         .findAll(Example.of(spaceCrewMemberSample, exampleMatcher), pageRequest);
 
     //Assert collection
-    assertNotNull(spaceCreMemberPage);
-    assertEquals(1, spaceCreMemberPage.getNumberOfElements());
-    assertEquals(3, spaceCreMemberPage.getTotalElements());
-    assertNotNull(spaceCreMemberPage.getContent());
-    assertTrue(spaceCreMemberPage.hasPrevious());
-    assertTrue(spaceCreMemberPage.hasNext());
 
     //Assert space crew member
-    assertNotNull(spaceCreMemberPage.getContent().get(0));
-    assertEquals(2L, spaceCreMemberPage.getContent().get(0).getId());
-    assertEquals(123456789L, spaceCreMemberPage.getContent().get(0).getSpaceShipId());
-    assertEquals("Princess Leia", spaceCreMemberPage.getContent().get(0).getName());
-    assertEquals(SpaceCrewMemberStatus.INACTIVE,
-        spaceCreMemberPage.getContent().get(0).getStatus());
-    assertEquals(SpaceCrewMemberRole.COMMANDER_OFFICER,
-        spaceCreMemberPage.getContent().get(0).getRole());
-    assertEquals(0, BigDecimal.valueOf(4000L).compareTo(spaceCreMemberPage.getContent().get(0).getSalary()));
+
   }
 
   @Test
+  @DisplayName("Given SpaceCrewMember identifier, when invoking findById method, then return SpaceCrewMember Optional")
   void findById() {
 
     Optional<SpaceCrewMember> spaceCrewMember = spaceCrewMemberRepository.findById(1L);
 
     //Assert spaceship
-    assertTrue(spaceCrewMember.isPresent());
-    assertNotNull(spaceCrewMember.get());
-    assertEquals(1L, spaceCrewMember.get().getId());
-    assertEquals(123456789L, spaceCrewMember.get().getSpaceShipId());
-    assertEquals("Finn", spaceCrewMember.get().getName());
-    assertEquals(SpaceCrewMemberStatus.ACTIVE, spaceCrewMember.get().getStatus());
-    assertEquals(SpaceCrewMemberRole.ENGINEER_OFFICER, spaceCrewMember.get().getRole());
-    assertEquals(0, BigDecimal.valueOf(3000L).compareTo(spaceCrewMember.get().getSalary()));
+
   }
 
   @Test
+  @DisplayName("Given none-existent SpaceCrewMember identifier, when invoking findById method, then return empty SpaceCrewMember Optional")
   void findByIdReturnsOptional() {
 
     Optional<SpaceCrewMember> spaceCrewMember = spaceCrewMemberRepository.findById(10L);
 
     //Assert spaceship
-    assertFalse(spaceCrewMember.isPresent());
   }
 
   @Test
+  @DisplayName("Given SpaceCrewMember, when invoking save method, then return SpaceCrewMember")
   void save() {
 
     SpaceCrewMember spaceCrewMember4 = SpaceCrewMember.builder()
@@ -146,18 +106,13 @@ public class SpaceCrewMemberRepositoryTests {
     spaceCrewMember4 = spaceCrewMemberRepository.save(spaceCrewMember4);
 
     //Assert space crew member
-    assertEquals(4L, spaceCrewMember4.getId());
-    assertEquals(1234567L, spaceCrewMember4.getSpaceShipId());
-    assertEquals("Han Solo", spaceCrewMember4.getName());
-    assertEquals(SpaceCrewMemberStatus.INACTIVE, spaceCrewMember4.getStatus());
-    assertEquals(SpaceCrewMemberRole.PILOT_OFFICER, spaceCrewMember4.getRole());
-    assertEquals(BigDecimal.valueOf(3000L), spaceCrewMember4.getSalary());
+
 
     //Assert collection
-    assertEquals(4, spaceCrewMemberRepository.count());
   }
 
   @Test
+  @DisplayName("Given pre-existent SpaceCrewMember, when invoking save method, then return SpaceCrewMember")
   void saveUpdate() {
 
     SpaceCrewMember spaceCrewMember = SpaceCrewMember.builder()
@@ -172,23 +127,17 @@ public class SpaceCrewMemberRepositoryTests {
     spaceCrewMember = spaceCrewMemberRepository.save(spaceCrewMember);
 
     //Assert space crew member
-    assertEquals(1L, spaceCrewMember.getId());
-    assertEquals(1234567L, spaceCrewMember.getSpaceShipId());
-    assertEquals("Finn", spaceCrewMember.getName());
-    assertEquals(SpaceCrewMemberStatus.ACTIVE, spaceCrewMember.getStatus());
-    assertEquals(SpaceCrewMemberRole.PILOT_OFFICER, spaceCrewMember.getRole());
-    assertEquals(BigDecimal.valueOf(4000L), spaceCrewMember.getSalary());
+
 
     //Assert collection
-    assertEquals(3, spaceCrewMemberRepository.count());
   }
 
   @Test
+  @DisplayName("Given SpaceCrewMember identifier, when invoking deleteById method, then expect reduced collection size")
   void delete() {
 
     spaceCrewMemberRepository.deleteById(1L);
 
     //Assert collection
-    assertEquals(2, spaceCrewMemberRepository.count());
   }
 }

@@ -42,7 +42,22 @@ This session focus primarily in the following topics:
    - ~~LT4.1-Modify SpaceMissionController.getSpaceMissions method to return PagedModel response~~ [VR3](https://app.pluralsight.com/player?course=spring-rest&author=peter-vanrijn&name=6fbffaa5-c1eb-4961-81b8-f34ef28cf5f6&clip=0&mode=live)
    - ~~LT4.2-Add selfref link to GetSpaceMissionResponse~~ [WR5](https://www.baeldung.com/spring-hateoas-tutorial)
    - ~~LT4.3-Add spaceship details link to GetSpaceMissionResponse~~ [WR5](https://www.baeldung.com/spring-hateoas-tutorial)
-
+- LT5-Logging capabilities [WR6](https://www.baeldung.com/mdc-in-log4j-2-logback#mdc-in-slf4jlogback)
+  - LT5.1-Add logging for inbound request processing
+  - LT5.2-Add logging for outbound response result  
+  - LT5.3-Add logging for inbound request processing duration
+- LT6-Mapped Diagnostic Context [WR6](https://www.baeldung.com/mdc-in-log4j-2-logback#mdc-in-slf4jlogback)
+  - LT6.1-Include trace-id MDC entry  
+  - LT6.2-Include operation MDC entry
+  - LT6.3-Include missing X-Trace-Id response header
+  - LT6.4-Include missing Service-Operation response header
+- LT7 Actuator enablement [WR7](https://www.baeldung.com/spring-boot-actuators)
+- LT9 Configuration Properties for currency conversion [WR5](https://www.baeldung.com/configuration-properties-in-spring-boot) [VR2](https://app.pluralsight.com/player?course=spring-boot-efficient-development-configuration-deployment&author=dustin-schultz&name=spring-boot-efficient-development-configuration-deployment-m3&clip=0&mode=live)
+  -LT9.1-Include various sector currencies and application profiles
+- LT10 Application testing [WR1](https://www.baeldung.com/spring-boot-testing) [WR2](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html) [WR3](https://www.tutorialspoint.com/spring_boot/spring_boot_unit_test_cases.htm) [VR1](https://app.pluralsight.com/player?course=tdd-spring-junit5&author=steven-haines&name=d8650a91-07c1-4b80-acbb-ee6c5cdf066d&clip=0&mode=live)
+  -LT10-1-Add unit test to the service layer
+  -LT10-2-Add integration test to the persistence layer
+  -LT10-3-Add integration test to the exposure layer
 
 ### Side activities
 

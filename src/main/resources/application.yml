@@ -27,15 +27,6 @@ spaceship-manager:
   client:
     provider: rest-template
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
 springdoc:
   api-docs:
     path: "/api-docs"

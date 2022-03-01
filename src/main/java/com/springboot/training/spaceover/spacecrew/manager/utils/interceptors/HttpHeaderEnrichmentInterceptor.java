@@ -14,8 +14,8 @@ public class HttpHeaderEnrichmentInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        response.addHeader(TRACE_ID_HEADER, MDC.get(TRACE_ID));
-        response.addHeader(SERVICE_OPERATION_HEADER, MDC.get(SERVICE_OPERATION));
+        //LT6.3- Include missing X-Trace-Id response header
+        //LT6.4- Include missing Service-Operation response header
         return true;
     }
 

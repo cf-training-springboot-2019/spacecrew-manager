@@ -18,13 +18,12 @@ public class MdcInitInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        MDC.put(TRACE_ID, Optional.ofNullable(request.getHeader(TRACE_ID_HEADER)).orElse(UUID.randomUUID().toString()));
+        //LT6.1- Include trace-id MDC entry
         if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Optional<ServiceOperation> serviceOperationAnnotation = Optional
                     .ofNullable(handlerMethod.getMethodAnnotation(ServiceOperation.class));
-            MDC.put(SERVICE_OPERATION, serviceOperationAnnotation.isPresent() ? serviceOperationAnnotation.get().value()
-                    : UNDEFINED_SERVICE_OPERATION);
+            //LT6.2- Include operation MDC entry
         }
         return true;
     }

@@ -1,13 +1,7 @@
 package com.springboot.training.spaceover.spacecrew.manager.service;
 
-import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.ENTITY_NOT_FOUND_MSG;
-import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.SPACE_CREW_MEMBER;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.springboot.training.spaceover.spacecrew.manager.domain.model.SpaceCrewMember;
@@ -18,35 +12,25 @@ import com.springboot.training.spaceover.spacecrew.manager.repository.SpaceCrewM
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import javax.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
-@ExtendWith(MockitoExtension.class)
+//LT10-2-Add unit test to the service layer
 class SpaceOverSpaceCrewMemberServiceTest {
 
-  @InjectMocks
   SpaceOverSpaceCrewMemberService service;
 
-  @Mock
   SpaceShipClient spaceShipClient;
 
-  @Mock
   SpaceCrewMemberRepository spaceCrewMemberRepository;
 
 
@@ -56,6 +40,7 @@ class SpaceOverSpaceCrewMemberServiceTest {
 
   @BeforeEach
   public void setUp() {
+    //Arrange
     spaceCrewMember1 = SpaceCrewMember.builder()
         .id(1L)
         .name("Han Solo")
@@ -84,6 +69,7 @@ class SpaceOverSpaceCrewMemberServiceTest {
   }
 
   @Test
+  @DisplayName("Given a SpaceCrewMember and Pageable arguments, when invoking findAll method, then return SpaceCrewMember Page")
   void findAll_Paged() {
 
     SpaceCrewMember spaceMissionSample = SpaceCrewMember.builder()
@@ -99,83 +85,86 @@ class SpaceOverSpaceCrewMemberServiceTest {
 
     Pageable pageRequest = PageRequest.of(0, 20, Sort.by(Direction.ASC, "id"));
 
+    //Arrange
     when(spaceCrewMemberRepository
-        .findAll(Example.of(spaceMissionSample, exampleMatcher), pageRequest))
-        .thenReturn(new PageImpl<>(Collections.singletonList(spaceCrewMember1)));
+        .findAll(Example.of(spaceMissionSample, exampleMatcher), pageRequest));
 
+    //Act
     Page<SpaceCrewMember> response = service.findAll(spaceMissionSample, pageRequest);
 
-    assertEquals(1, response.getTotalElements());
-    assertEquals(1, response.getTotalPages());
-    assertEquals(1, response.getContent().size());
-    assertTrue(response.getContent().contains(spaceCrewMember1));
+    //Assert
+
   }
 
   @Test
+  @DisplayName("Given no arguments, when invoking findAll method, then return SpaceMission List")
   void findAll() {
 
+    //Arrange
     List<SpaceCrewMember> listOfSpaceCrewMembersPersisted = new ArrayList<>();
 
     listOfSpaceCrewMembersPersisted.add(spaceCrewMember1);
     listOfSpaceCrewMembersPersisted.add(spaceCrewMember2);
 
-    when(spaceCrewMemberRepository.findAll()).thenReturn(listOfSpaceCrewMembersPersisted);
+    //Act
+    when(spaceCrewMemberRepository.findAll());
 
     List<SpaceCrewMember> response = service.findAll();
 
-    assertEquals(2, response.size());
-    assertTrue(response.stream().anyMatch(crewMember -> crewMember.getName().equals("Han Solo")));
-    assertTrue(response.stream().anyMatch(crewMember -> crewMember.getName().equals("Rose Tico")));
+    //Assert
+
   }
 
   @Test
+  @DisplayName("Given a valid SpaceCrewMember identifier argument, when invoking findById method, then return SpaceCrewMember")
   void findBydId() {
 
-    when(spaceCrewMemberRepository.findById(1L)).thenReturn(Optional.of(spaceCrewMember1));
+    //Arrange
+    when(spaceCrewMemberRepository.findById(1L));
 
+    //Act
     SpaceCrewMember response = service.findBydId(1L);
 
-    assertEquals(1L, response.getId());
-    assertEquals("Han Solo", response.getName());
-    assertEquals(SpaceCrewMemberRole.PILOT_OFFICER, response.getRole());
-    assertEquals(1234567L, response.getSpaceShipId());
-    assertEquals(BigDecimal.valueOf(3000L), response.getSalary());
-    assertEquals(SpaceCrewMemberStatus.ACTIVE, response.getStatus());
+    //Assert
+
   }
 
   @Test
+  @DisplayName("Given an invalid SpaceCrewMember identifier argument, when invoking findById method, then throw EntityNotFoundException")
   void findBydId_EntityNotFound() {
 
-    when(spaceCrewMemberRepository.findById(1L)).thenReturn(Optional.empty());
+    //Arrange
+    when(spaceCrewMemberRepository.findById(1L));
 
-    EntityNotFoundException e = assertThrows(EntityNotFoundException.class,
-        () -> service.findBydId(1L));
+    //ACt & Assert
+    assertThrows(null, () -> service.findBydId(1L), "");
 
-    assertEquals(String.format(ENTITY_NOT_FOUND_MSG, SPACE_CREW_MEMBER, 1L), e.getMessage());
   }
 
   @Test
+  @DisplayName("Given a SpaceCrewMember, when invoking save method, then return SpaceCrewMember")
   void save() {
 
-    when(spaceShipClient.findBydId(1234567L)).thenReturn(spaceShip);
+    //Arrange
+    when(spaceShipClient.findBydId(1234567L));
 
     spaceCrewMember2.setStatus(SpaceCrewMemberStatus.ACTIVE);
-    when(spaceCrewMemberRepository.save(spaceCrewMember2)).thenReturn(spaceCrewMember2);
 
+    when(spaceCrewMemberRepository.save(spaceCrewMember2));
+
+    //Act
     SpaceCrewMember response = service.save(spaceCrewMember2);
 
-    assertEquals(2L, response.getId());
-    assertEquals("Rose Tico", response.getName());
-    assertEquals(SpaceCrewMemberRole.ENGINEER_OFFICER, response.getRole());
-    assertEquals(1234567L, response.getSpaceShipId());
-    assertEquals(BigDecimal.valueOf(2000L), response.getSalary());
-    assertEquals(SpaceCrewMemberStatus.ACTIVE, response.getStatus());
+    //Assert
+
   }
 
   @Test
+  @DisplayName("Given a SpaceCrewMember, when invoking update method, then return SpaceCrewMember")
   void update() {
 
-    when(spaceShipClient.findBydId(1234567L)).thenReturn(spaceShip);
+    //Arrange
+    when(spaceShipClient.findBydId(1234567L));
 
     SpaceCrewMember spaceCrewMemberToPersist = SpaceCrewMember.builder()
         .id(2L)
@@ -186,26 +175,25 @@ class SpaceOverSpaceCrewMemberServiceTest {
         .status(SpaceCrewMemberStatus.ACTIVE)
         .build();
 
-    when(spaceCrewMemberRepository.save(spaceCrewMemberToPersist))
-        .thenReturn(spaceCrewMemberToPersist);
+    when(spaceCrewMemberRepository.save(spaceCrewMemberToPersist));
 
+    //Act
     SpaceCrewMember response = service.update(spaceCrewMemberToPersist);
 
-    assertEquals(2L, response.getId());
-    assertEquals("Rose Tico Tico", response.getName());
-    assertEquals(SpaceCrewMemberRole.COMMANDER_OFFICER, response.getRole());
-    assertEquals(1234567L, response.getSpaceShipId());
-    assertEquals(BigDecimal.valueOf(4000L), response.getSalary());
-    assertEquals(SpaceCrewMemberStatus.ACTIVE, response.getStatus());
+    //Assert
+
   }
 
   @Test
+  @DisplayName("Given a SpaceCrewMember identifier, when invoking delete method, then invoke repository.deleteById")
   void deleteById() {
 
+    //Arrange
     doNothing().when(spaceCrewMemberRepository).deleteById(1L);
 
+    //Act
     service.deleteById(1L);
 
-    verify(spaceCrewMemberRepository, times(1)).deleteById(1L);
+    //Assert
   }
 }

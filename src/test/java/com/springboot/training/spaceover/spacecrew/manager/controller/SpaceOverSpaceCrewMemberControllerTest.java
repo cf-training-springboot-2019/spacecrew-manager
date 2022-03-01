@@ -66,35 +66,26 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.FileCopyUtils;
 
-@WebMvcTest
+//LT10-3-Add integration test to the exposure layer
 @ActiveProfiles("test")
 class SpaceOverSpaceCrewMemberControllerTest {
 
-  @Autowired
   private MockMvc mockMvc;
 
-  @MockBean
   private SpaceCrewMemberService spaceCrewMemberService;
 
-  @MockBean
   private ModelMapper modelMapper;
 
-  @MockBean
   private PagedResourcesAssembler<SpaceCrewMember> pagedModelAssembler;
 
-  @MockBean
   private PaginationModelAssembler modelAssembler;
 
-  @MockBean
   private SpaceCrewManagerProperties spaceCrewManagerProperties;
 
-  @Autowired
   private HttpHeaderEnrichmentInterceptor httpHeaderEnrichmentInterceptor;
 
-  @Autowired
   private MdcInitInterceptor mdcInitInterceptor;
 
-  @Autowired
   private ExceptionHandlingController exceptionHandlingController;
 
   @Value("classpath:samples/requests/createSpaceCrewMember201.json")
@@ -186,50 +177,14 @@ class SpaceOverSpaceCrewMemberControllerTest {
 
     PagedModel<GetSpaceCrewMemberResponse> response = PagedModel
         .of(spaceMissionResponseList, new PagedModel.PageMetadata(20, 0, 3, 1));
-    when(spaceCrewMemberService.findAll(spaceCrewMemberSample, pageRequest))
-        .thenReturn(spaceCrewMemberPage);
-    when(pagedModelAssembler.toModel(eq(spaceCrewMemberPage), any(PaginationModelAssembler.class)))
-        .thenReturn(response);
+
+    when(spaceCrewMemberService.findAll(spaceCrewMemberSample, pageRequest)).thenReturn(spaceCrewMemberPage);
+
+    when(pagedModelAssembler.toModel(eq(spaceCrewMemberPage), any(PaginationModelAssembler.class)));
 
     //Act & Assert
     mockMvc.perform(get("/crewmembers")
-        .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(header().exists(TRACE_ID_HEADER))
-        .andExpect(
-            header().string(SERVICE_OPERATION_HEADER, GET_SPACE_CREW_MEMBERS_SERVICE_OPERATION))
-        .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[0].id").value(1))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[0].name")
-            .value("Han Solo"))
-        .andExpect(
-            jsonPath("$._embedded.getSpaceCrewMemberResponses[0].role").value("PILOT_OFFICER"))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[0].status").value("ACTIVE"))
-        .andExpect(
-            jsonPath("$._embedded.getSpaceCrewMemberResponses[0].spaceShipId").value(1234567L))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[0].salary").value(3000L))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[1].id").value(2))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[1].name")
-            .value("Rose Tico"))
-        .andExpect(
-            jsonPath("$._embedded.getSpaceCrewMemberResponses[1].role").value("ENGINEER_OFFICER"))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[1].status").value("INACTIVE"))
-        .andExpect(
-            jsonPath("$._embedded.getSpaceCrewMemberResponses[1].spaceShipId").value(1234567L))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[1].salary").value(2000L))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[2].id").value(3))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[2].name")
-            .value("Finn"))
-        .andExpect(
-            jsonPath("$._embedded.getSpaceCrewMemberResponses[2].role").value("ENGINEER_OFFICER"))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[2].status").value("ACTIVE"))
-        .andExpect(
-            jsonPath("$._embedded.getSpaceCrewMemberResponses[2].spaceShipId").value(1234567L))
-        .andExpect(jsonPath("$._embedded.getSpaceCrewMemberResponses[2].salary").value(1850L))
-        .andExpect(jsonPath("$.page.number").value(0))
-        .andExpect(jsonPath("$.page.size").value(20))
-        .andExpect(jsonPath("$.page.totalElements").value(3))
-        .andExpect(jsonPath("$.page.totalPages").value(1));
+        .accept(MediaType.APPLICATION_JSON));
   }
 
   @Test
@@ -255,23 +210,12 @@ class SpaceOverSpaceCrewMemberControllerTest {
         .status(SpaceCrewMemberStatus.ACTIVE)
         .build();
 
-    when(spaceCrewMemberService.findBydId(1L)).thenReturn(spaceCrewMember);
-    when(modelMapper.map(spaceCrewMember, GetSpaceCrewMemberResponse.class)).thenReturn(response);
+    when(spaceCrewMemberService.findBydId(1L));
+    when(modelMapper.map(spaceCrewMember, GetSpaceCrewMemberResponse.class));
     //Act & Assert
     mockMvc.perform(get("/crewmembers/1")
         .accept(MediaType.APPLICATION_JSON)
-        .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(header().exists(TRACE_ID_HEADER))
-        .andExpect(
-            header().string(SERVICE_OPERATION_HEADER, GET_SPACE_CREW_MEMBER_SERVICE_OPERATION))
-        .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-        .andExpect(jsonPath("$.id").value(1))
-        .andExpect(jsonPath("$.name").value("Han Solo"))
-        .andExpect(jsonPath("$.role").value("PILOT_OFFICER"))
-        .andExpect(jsonPath("$.status").value("ACTIVE"))
-        .andExpect(jsonPath("$.spaceShipId").value(1234567L))
-        .andExpect(jsonPath("$.salary").value(3000L));
+        .contentType(MediaType.APPLICATION_JSON));
 
   }
 
@@ -280,25 +224,11 @@ class SpaceOverSpaceCrewMemberControllerTest {
   @DisplayName("Given a consumer client, when invoking GET /crewmembers/{id} with none-existent identifier, then reply 404 response")
   void getSpaceCrewMemberNotFound() {
     //Arrange
-    when(spaceCrewMemberService.findBydId(1L))
-        .thenThrow(
-            new EntityNotFoundException(
-                String.format(ENTITY_NOT_FOUND_MSG, SPACE_CREW_MEMBER, 1L)));
+    when(spaceCrewMemberService.findBydId(1L));
     //Arrange
     mockMvc.perform(get("/crewmembers/1")
         .accept(MediaType.APPLICATION_JSON)
-        .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isNotFound())
-        .andExpect(header().exists(TRACE_ID_HEADER))
-        .andExpect(
-            header().string(SERVICE_OPERATION_HEADER, GET_SPACE_CREW_MEMBER_SERVICE_OPERATION))
-        .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-        .andExpect(jsonPath("$.reason").value(HttpStatus.NOT_FOUND.getReasonPhrase()))
-        .andExpect(jsonPath("$.code").value(HttpStatus.NOT_FOUND.value()))
-        .andExpect(jsonPath("$.status").value(HttpStatus.NOT_FOUND.value()))
-        .andExpect(
-            jsonPath("$.message")
-                .value(String.format(ENTITY_NOT_FOUND_MSG, SPACE_CREW_MEMBER, 1L)));
+        .contentType(MediaType.APPLICATION_JSON));
 
   }
 
@@ -333,18 +263,13 @@ class SpaceOverSpaceCrewMemberControllerTest {
     String requestContent = FileCopyUtils
         .copyToString(new FileReader(createSpaceCrewMember201Request.getFile()));
 
-    when(modelMapper.map(request, SpaceCrewMember.class)).thenReturn(spaceCrewMember);
-    when(spaceCrewMemberService.save(spaceCrewMember)).thenReturn(persistedSpaceCrewMember);
+    when(modelMapper.map(request, SpaceCrewMember.class));
+    when(spaceCrewMemberService.save(spaceCrewMember));
     //Arrange
     mockMvc.perform(post("/crewmembers")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(requestContent))
-        .andExpect(status().isCreated())
-        .andExpect(header().exists(TRACE_ID_HEADER))
-        .andExpect(
-            header().string(SERVICE_OPERATION_HEADER, CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION))
-        .andExpect(header().string(LOCATION, "http://localhost/crewmembers/1"));
+        .content(requestContent));
   }
 
   @Test
@@ -358,16 +283,7 @@ class SpaceOverSpaceCrewMemberControllerTest {
     mockMvc.perform(post("/crewmembers")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(requestContent))
-        .andExpect(status().isBadRequest())
-        .andExpect(header().exists(TRACE_ID_HEADER))
-        .andExpect(
-            header().string(SERVICE_OPERATION_HEADER, CREATE_SPACE_CREW_MEMBER_SERVICE_OPERATION))
-        .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-        .andExpect(jsonPath("$.reason").value(HttpStatus.BAD_REQUEST.getReasonPhrase()))
-        .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-        .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
-        .andExpect(jsonPath("$.message").value(containsString("role must not be null")));
+        .content(requestContent));
   }
 
   @Test
@@ -405,27 +321,14 @@ class SpaceOverSpaceCrewMemberControllerTest {
     String requestContent = FileCopyUtils
         .copyToString(new FileReader(patchSpaceCrewMember200Request.getFile()));
 
-    when(spaceCrewMemberService.findBydId(1L)).thenReturn(spaceCrewMember);
-    when(spaceCrewMemberService.update(patchedSpaceCrewMember)).thenReturn(patchedSpaceCrewMember);
-    when(modelMapper.map(patchedSpaceCrewMember, PatchSpaceCrewMemberResponse.class))
-        .thenReturn(response);
+    when(spaceCrewMemberService.findBydId(1L));
+    when(spaceCrewMemberService.update(patchedSpaceCrewMember));
+    when(modelMapper.map(patchedSpaceCrewMember, PatchSpaceCrewMemberResponse.class));
     //Act & Assert
     mockMvc.perform(patch("/crewmembers/1")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(APPLICATION_JSON_PATCH)
-        .content(requestContent))
-        .andExpect(status().isOk())
-        .andExpect(header().exists(TRACE_ID_HEADER))
-        .andExpect(
-            header().string(SERVICE_OPERATION_HEADER, PATCH_SPACE_CREW_MEMBER_SERVICE_OPERATION))
-        .andDo(print())
-        .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-        .andExpect(jsonPath("$.id").value(1))
-        .andExpect(jsonPath("$.name").value("Han Solo"))
-        .andExpect(jsonPath("$.role").value("COMMANDER_OFFICER"))
-        .andExpect(jsonPath("$.status").value("ACTIVE"))
-        .andExpect(jsonPath("$.spaceShipId").value(1234567L))
-        .andExpect(jsonPath("$.salary").value(5000L));
+        .content(requestContent));
   }
 
   @Test
@@ -463,25 +366,14 @@ class SpaceOverSpaceCrewMemberControllerTest {
     String requestContent = FileCopyUtils
         .copyToString(new FileReader(putSpaceCrewMember200Request.getFile()));
 
-    when(modelMapper.map(request, SpaceCrewMember.class)).thenReturn(spaceCrewMember);
-    when(spaceCrewMemberService.update(spaceCrewMember)).thenReturn(spaceCrewMember);
-    when(modelMapper.map(spaceCrewMember, PutSpaceCrewMemberResponse.class)).thenReturn(response);
+    when(modelMapper.map(request, SpaceCrewMember.class));
+    when(spaceCrewMemberService.update(spaceCrewMember));
+    when(modelMapper.map(spaceCrewMember, PutSpaceCrewMemberResponse.class));
     //Act & Assert
     mockMvc.perform(put("/crewmembers/3")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(requestContent))
-        .andExpect(status().isOk())
-        .andExpect(header().exists(TRACE_ID_HEADER))
-        .andExpect(
-            header().string(SERVICE_OPERATION_HEADER, PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION))
-        .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-        .andExpect(jsonPath("$.id").value(3))
-        .andExpect(jsonPath("$.name").value("Finn"))
-        .andExpect(jsonPath("$.role").value("ENGINEER_OFFICER"))
-        .andExpect(jsonPath("$.status").value("ACTIVE"))
-        .andExpect(jsonPath("$.spaceShipId").value(1234567L))
-        .andExpect(jsonPath("$.salary").value(1850L));
+        .content(requestContent));
 
   }
 
@@ -496,16 +388,7 @@ class SpaceOverSpaceCrewMemberControllerTest {
     mockMvc.perform(put("/crewmembers/3")
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(requestContent))
-        .andExpect(status().isBadRequest())
-        .andExpect(header().exists(TRACE_ID_HEADER))
-        .andExpect(
-            header().string(SERVICE_OPERATION_HEADER, PUT_SPACE_CREW_MEMBER_SERVICE_OPERATION))
-        .andExpect(header().string(CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-        .andExpect(jsonPath("$.reason").value(HttpStatus.BAD_REQUEST.getReasonPhrase()))
-        .andExpect(jsonPath("$.code").value(HttpStatus.BAD_REQUEST.value()))
-        .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
-        .andExpect(jsonPath("$.message").value(containsString("name must not be empty")));
+        .content(requestContent));
   }
 
   @Test
@@ -514,10 +397,6 @@ class SpaceOverSpaceCrewMemberControllerTest {
   void deleteSpaceCrewMemberNoContent() {
     //No Arrange required
     //Act & Assert
-    mockMvc.perform(delete("/crewmembers/1"))
-        .andExpect(status().isNoContent())
-        .andExpect(header().exists(TRACE_ID_HEADER))
-        .andExpect(
-            header().string(SERVICE_OPERATION_HEADER, DELETE_SPACE_CREW_MEMBER_SERVICE_OPERATION));
+    mockMvc.perform(delete("/crewmembers/1"));
   }
 }
