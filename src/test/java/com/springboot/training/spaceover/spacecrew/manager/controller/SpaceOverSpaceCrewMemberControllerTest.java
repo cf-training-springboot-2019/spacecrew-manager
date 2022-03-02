@@ -178,7 +178,7 @@ class SpaceOverSpaceCrewMemberControllerTest {
     PagedModel<GetSpaceCrewMemberResponse> response = PagedModel
         .of(spaceMissionResponseList, new PagedModel.PageMetadata(20, 0, 3, 1));
 
-    when(spaceCrewMemberService.findAll(spaceCrewMemberSample, pageRequest)).thenReturn(spaceCrewMemberPage);
+    when(spaceCrewMemberService.findAll(spaceCrewMemberSample, pageRequest));
 
     when(pagedModelAssembler.toModel(eq(spaceCrewMemberPage), any(PaginationModelAssembler.class)));
 
