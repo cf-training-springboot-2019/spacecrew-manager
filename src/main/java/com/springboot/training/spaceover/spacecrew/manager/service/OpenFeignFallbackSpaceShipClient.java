@@ -1,16 +1,7 @@
 package com.springboot.training.spaceover.spacecrew.manager.service;
 
-import com.springboot.training.spaceover.spacecrew.manager.domain.response.inbound.GetSpaceShipResponse;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
-@Slf4j
-@Component
+//LT2.1-Include circuit breaker
 public class OpenFeignFallbackSpaceShipClient implements OpenFeignSpaceShipClient{
 
-	@Override
-	public GetSpaceShipResponse findBydId(Long id) {
-		log.error("Failed to retrieve spaceship with id {}", id);
-		return null;
-	}
+
 }

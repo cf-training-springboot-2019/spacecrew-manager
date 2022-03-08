@@ -1,5 +1,48 @@
+application:
+  name: '@project.artifactId@'
+  description: '@project.description@'
+  version: '@project.version@'
+
+server:
+  port: 8081
+
 spring:
   application:
     name: spacecrew-manager
-  config:
-    import: configserver:http://localhost:8888
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+  data:
+    web:
+      pageable:
+        size-parameter: size
+        page-parameter: page
+        default-page-size: 20
+        one-indexed-parameters: false
+        max-page-size: 100
+
+spaceship-manager:
+  client:
+    provider: open-feign
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  api-docs:
+    path: "/api-docs"
+  swagger-ui:
+    path: "/"
+
+open-api:
+  header:
+    pagination:
+      enabled: false
