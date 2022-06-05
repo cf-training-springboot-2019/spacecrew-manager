@@ -2,6 +2,6 @@ currency:
   conversion:
     id: rm
     converter:
-      omega:
+      rm:
         coin: schmeckles
         rate: 150
