@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient("spaceship-manager")
+@FeignClient(name = "spaceship-manager", fallback = OpenFeignFallbackSpaceShipClient.class)
 @ConditionalOnProperty(name = "spaceship-manager.client.provider", havingValue = "open-feign")
 public interface OpenFeignSpaceShipClient extends SpaceShipClient {
 

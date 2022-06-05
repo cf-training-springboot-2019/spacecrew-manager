@@ -1,17 +1,19 @@
 package com.springboot.training.spaceover.spacecrew.manager.utils.interceptors;
 
+import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.SERVICE_OPERATION;
+import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.TRACE_ID;
+import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.TRACE_ID_HEADER;
+import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.UNDEFINED_SERVICE_OPERATION;
+
 import com.springboot.training.spaceover.spacecrew.manager.utils.annotatations.ServiceOperation;
+import java.util.Optional;
+import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
-import java.util.UUID;
-
-import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.*;
 
 @Component
 public class MdcInitInterceptor implements HandlerInterceptor {

@@ -1,20 +1,19 @@
 package com.springboot.training.spaceover.spacecrew.manager.service;
 
+import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.ENTITY_NOT_FOUND_MSG;
+import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.SPACE_CREW_MEMBER;
+
 import com.springboot.training.spaceover.spacecrew.manager.domain.model.SpaceCrewMember;
 import com.springboot.training.spaceover.spacecrew.manager.enums.SpaceCrewMemberStatus;
 import com.springboot.training.spaceover.spacecrew.manager.repository.SpaceCrewMemberRepository;
+import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.List;
-
-import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.ENTITY_NOT_FOUND_MSG;
-import static com.springboot.training.spaceover.spacecrew.manager.utils.constants.SpaceCrewManagerConstant.SPACE_CREW_MEMBER;
 
 @Service
 @RequiredArgsConstructor
