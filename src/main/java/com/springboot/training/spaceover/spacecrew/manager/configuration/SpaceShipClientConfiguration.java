@@ -12,8 +12,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class SpaceShipClientConfiguration {
 
-    private final SpaceCrewManagerProperties spaceCrewManagerProperties;
-
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
@@ -22,7 +20,7 @@ public class SpaceShipClientConfiguration {
 
     @Bean
     public WebClient webClient() {
-        return WebClient.builder().baseUrl(spaceCrewManagerProperties.getSpaceshipManagerBaseUrl()).build();
+        return WebClient.builder().build();
     }
 
 }
